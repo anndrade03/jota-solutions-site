@@ -196,21 +196,19 @@ function initForm() {
     if (span) span.textContent = "Enviando...";
 
     try {
+  const formData = new FormData();
+  formData.append("nome", document.getElementById("nome").value);
+  formData.append("email", document.getElementById("email").value);
+  formData.append("telefone", document.getElementById("tel").value);
+  formData.append("tipo", document.getElementById("tipo").value);
+  formData.append("mensagem", document.getElementById("msg").value);
+
   await fetch(FORMSPREE_URL, {
     method: "POST",
     mode: "no-cors",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      nome: document.getElementById("nome").value,
-      email: document.getElementById("email").value,
-      telefone: document.getElementById("tel").value,
-      tipo: document.getElementById("tipo").value,
-      mensagem: document.getElementById("msg").value,
-    }),
+    body: formData,
   });
 
-  // Com no-cors não conseguimos ler a resposta
-  // mas se chegou aqui sem erro, foi enviado
   fb.textContent = "✓ Mensagem enviada! Entraremos em contato em até 24 horas.";
   fb.className = "cf__fb success";
   fb.style.display = "block";
