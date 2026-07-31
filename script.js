@@ -3,7 +3,7 @@
    ============================================================ */
 "use strict";
 
-const FORMSPREE_URL = "https://hook.us2.make.com/315kzcwhg2r62jl39m2z98nbxy2d36ig"; // substitua pela URL real
+const FORMSPREE_URL = "https://script.google.com/macros/s/AKfycbwp-przzCg0uVCR-Vw51A8cnRsHfLJ_BWTGZZ25-azowYOIZEWLOd_A16-Gwt5GgKs/exec"; // substitua pela URL real
 
 document.addEventListener("DOMContentLoaded", () => {
   initNav();
@@ -197,10 +197,16 @@ function initForm() {
 
     try {
       const res = await fetch(FORMSPREE_URL, {
-        method: "POST",
-        headers: { Accept: "application/json" },
-        body: new FormData(form),
-      });
+  method: "POST",
+  headers: { "Content-Type": "application/json" },
+  body: JSON.stringify({
+    nome: document.getElementById("nome").value,
+    email: document.getElementById("email").value,
+    telefone: document.getElementById("tel").value,
+    tipo: document.getElementById("tipo").value,
+    mensagem: document.getElementById("msg").value,
+  }),
+});
       if (!res.ok) throw new Error();
       fb.textContent = "✓ Mensagem enviada! Entraremos em contato em até 24 horas.";
       fb.className = "cf__fb success";
